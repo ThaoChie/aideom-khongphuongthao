@@ -116,8 +116,8 @@ col_nav_global, col_content_global = st.columns([1, 4], gap="large")
 with col_nav_global:
     st.title(" ")
     with st.container(border=True):
-        st.markdown("<h3 style='margin-bottom: 0; color: #F50057;'>AIDEOM</h3>", unsafe_allow_html=True)
-        st.markdown("<p style='color: #FF4081; font-weight: 600; font-size: 0.9em; margin-top: -5px; margin-bottom: 10px;'>Khổng Phương Thảo</p>", unsafe_allow_html=True)
+        st.markdown("<h3 style='margin-bottom: 0; color: #F50057 !important;'>AIDEOM</h3>", unsafe_allow_html=True)
+        st.markdown("<p style='color: #FF4081 !important; font-weight: 600; font-size: 0.9em; margin-top: -5px; margin-bottom: 10px;'>Khổng Phương Thảo</p>", unsafe_allow_html=True)
         st.markdown("<hr style='margin: 10px 0;'>", unsafe_allow_html=True)
         page = st.radio("Mục lục:", pages, label_visibility="collapsed")
 
