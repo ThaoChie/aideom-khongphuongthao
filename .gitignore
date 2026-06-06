@@ -13,3 +13,5 @@ dist/
 .pytest_cache/
 *.log
 mysql_data/
+
+outputs/
