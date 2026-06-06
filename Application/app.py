@@ -14,89 +14,62 @@ DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__
 st.set_page_config(page_title="AIDEOM-VN Streamlit", layout="wide", initial_sidebar_state="expanded")
 
 st.markdown("""<style>
-    /* Elegant Neumorphic / Soft Pink UI Theme */
-    @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap');
+    /* Exact Neumorphism Pink Dashboard Theme */
+    @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800;900&display=swap');
     
     :root {
-      --bg-color: #FFFFFF; /* Pure white app background */
-      --card-bg: #FFE5EE; /* Stronger pink tint for cards */
-      --text-main: #1D1D1F; /* Dark grey almost black */
+      --text-main: #1D1D1F; 
       --text-muted: #86868B;
-      --accent-magenta: #F50057; /* Punchy magenta from the image */
-      --accent-purple: #9C27B0;
-      --accent-blue: #03A9F4;
-      --shadow-color: rgba(255, 200, 221, 0.4);
-      --border-light: #FFC8DD;
+      --accent-magenta: #F50057; /* The bright magenta from the image */
     }
     
     .stApp { 
-        background-color: var(--bg-color) !important;
-        background-image: none !important; /* Remove starry background */
+        background: radial-gradient(circle at bottom left, #ffa6c9 0%, #ffd1e3 30%, #fdf8fa 80%) !important;
         color: var(--text-main); 
         font-family: 'Nunito Sans', sans-serif !important; 
     }
     
-    /* Remove stars pseudo-element */
-    .stApp::before { display: none !important; }
-
     /* Sidebar */
     [data-testid="stSidebar"] { 
-        background-color: #FFFFFF !important; 
-        border-right: 1px solid var(--border-light); 
-        box-shadow: 4px 0 20px rgba(0,0,0,0.02);
+        background-color: rgba(253, 248, 250, 0.6) !important; 
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        border-right: 1px solid rgba(255, 255, 255, 0.8); 
+        box-shadow: 4px 0 30px rgba(245, 0, 87, 0.05);
     }
     [data-testid="stSidebar"] * { color: var(--text-muted); font-weight: 600; }
-    [data-testid="stSidebar"] h1, [data-testid="stSidebar"] p { color: var(--text-main) !important; font-weight: 800; }
-    
-    /* Active styling in sidebar simulation */
-    [data-testid="stSidebar"] [data-testid="stSidebarNavItems"] li[data-selected="true"] {
-        background-color: rgba(245, 0, 87, 0.05);
-        border-right: 3px solid var(--accent-magenta);
-    }
+    [data-testid="stSidebar"] h1, [data-testid="stSidebar"] p { color: var(--text-main) !important; font-weight: 900; }
 
     /* Soft UI Buttons */
     .stButton > button {
-        background: #FFFFFF !important; 
-        border: 1px solid var(--border-light) !important; 
+        background: var(--accent-magenta) !important; 
+        border: none !important; 
         border-radius: 12px !important;
-        box-shadow: 0 4px 12px var(--shadow-color) !important;
-        color: var(--text-main) !important; 
-        font-weight: 700 !important; 
-        padding: 0.5rem 1rem !important;
-        transition: all 0.2s ease !important;
+        box-shadow: 0 8px 20px rgba(245, 0, 87, 0.3) !important;
+        color: #FFFFFF !important; 
+        font-weight: 800 !important; 
+        padding: 0.5rem 1.5rem !important;
+        transition: all 0.3s ease !important;
     }
     .stButton > button:hover { 
-        background: var(--accent-magenta) !important; 
-        color: #FFFFFF !important;
-        border-color: var(--accent-magenta) !important;
         transform: translateY(-2px); 
-        box-shadow: 0 6px 16px rgba(245, 0, 87, 0.3) !important;
+        box-shadow: 0 12px 25px rgba(245, 0, 87, 0.4) !important;
     }
     
-    /* Soft UI Metrics Cards */
-    [data-testid="stMetric"] {
-        background: var(--card-bg) !important; 
-        border-radius: 20px !important; 
-        padding: 20px !important; 
-        margin: 10px 0 !important;
-        border: 1px solid var(--border-light) !important;
-        box-shadow: 0 10px 30px var(--shadow-color) !important; 
-        transition: transform 0.2s !important;
-        text-align: left;
-        height: 100% !important;
+    /* White Soft UI Cards */
+    [data-testid="stMetric"], div[data-testid="stVerticalBlock"] > div[data-testid="stVerticalBlockBorderWrapper"] > div {
+        background: rgba(255, 255, 255, 0.85) !important; 
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        border-radius: 24px !important; 
+        border: 2px solid rgba(255, 255, 255, 1) !important;
+        box-shadow: 0 15px 35px rgba(233, 30, 99, 0.08) !important; 
+        transition: transform 0.3s !important;
     }
-    [data-testid="stMetric"]:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(220, 200, 210, 0.7) !important; }
-    [data-testid="stMetricValue"] { color: var(--text-main) !important; font-size: 2.2rem !important; font-weight: 800 !important; }
+    [data-testid="stMetric"] { padding: 20px !important; margin: 10px 0 !important; text-align: left; height: 100% !important; }
+    [data-testid="stMetric"]:hover { transform: translateY(-3px); box-shadow: 0 20px 45px rgba(233, 30, 99, 0.12) !important; }
+    [data-testid="stMetricValue"] { color: var(--text-main) !important; font-size: 2.2rem !important; font-weight: 900 !important; }
     [data-testid="stMetricLabel"] { color: var(--text-muted) !important; font-weight: 700 !important; font-size: 0.95rem !important; margin-bottom: 5px; }
-
-    /* Soft UI Containers (for charts) */
-    div[data-testid="stVerticalBlock"] > div[data-testid="stVerticalBlockBorderWrapper"] > div {
-        background: var(--card-bg) !important;
-        border-radius: 20px !important;
-        border: 1px solid #FFFFFF !important;
-        box-shadow: 0 10px 30px var(--shadow-color) !important;
-        padding: 20px !important;
-    }
 
     /* Tabs */
     .stTabs [data-baseweb="tab-list"] {
@@ -105,16 +78,16 @@ st.markdown("""<style>
     }
     .stTabs [data-baseweb="tab"] {
         color: var(--text-muted) !important;
-        font-weight: 700;
+        font-weight: 800;
         padding: 10px 0;
     }
     .stTabs [aria-selected="true"] {
-        color: var(--accent-magenta) !important;
+        color: var(--text-main) !important;
         border-bottom: 3px solid var(--accent-magenta) !important;
     }
 
     /* Typography */
-    h1, h2, h3 { color: var(--text-main) !important; font-weight: 800; border: none; margin-bottom: 20px;}
+    h1, h2, h3 { color: var(--text-main) !important; font-weight: 900; border: none; margin-bottom: 20px;}
     p, label { color: var(--text-muted); font-weight: 600; }
     
     .block-container { position: relative; z-index: 1; padding-top: 2rem; }
