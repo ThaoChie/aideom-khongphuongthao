@@ -291,20 +291,15 @@ elif page == pages[3]:
                 st.dataframe(df_pulp.style.format("{:,.1f}"), use_container_width=True)
             else:
                 st.error("Không khả thi.")
+
         with st.container(border=True):
-            st.subheader("2. Giải bằng CVXPY – So sánh kết quả")
-            if res['cvxpy_ok']:
-                st.success(f"Z* (CVXPY) = {res['cvxpy_z']:,.1f}")
-            else:
-                st.warning("CVXPY không khả dụng.")
-        with st.container(border=True):
-            st.subheader("3. Heatmap phân bổ tối ưu")
+            st.subheader("2. Heatmap phân bổ tối ưu")
             if res['status'] == 'Optimal':
                 df_hm = pd.DataFrame(res['allocation']).T
                 fig = px.imshow(df_hm, labels=dict(x="Hạng mục", y="Vùng", color="Ngân sách"), color_continuous_scale="Reds", aspect="auto", text_auto=",.0f")
                 st.plotly_chart(fig, use_container_width=True)
         with st.container(border=True):
-            st.subheader("4. Chi phí kinh tế của công bằng vùng miền (bỏ C5)")
+            st.subheader("3. Chi phí kinh tế của công bằng vùng miền (bỏ C5)")
             col1, col2, col3 = st.columns(3)
             col1.metric("Z* có C5", f"{res['Z']:,.1f}")
             col2.metric("Z* không C5", f"{res['no_equity_z']:,.1f}")
