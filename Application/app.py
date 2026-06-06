@@ -18,23 +18,23 @@ st.markdown("""<style>
     :root {
       --bg: #FFFFFF;
       --text-primary: #333333;
-      --text-secondary: #AC5865;
-      --clay-shadow-out: 4px 4px 10px rgba(202,135,126, 0.2), -4px -4px 10px #ffffff;
-      --clay-shadow-in: inset 2px 2px 5px rgba(202,135,126, 0.2), inset -2px -2px 5px #ffffff;
-      --accent-color: #C13346;
-      --accent-hover: #FFC8DD;
+      --text-secondary: #FFC8DD;
+      --clay-shadow-out: 4px 4px 10px rgba(255,200,221, 0.2), -4px -4px 10px #ffffff;
+      --clay-shadow-in: inset 2px 2px 5px rgba(255,200,221, 0.2), inset -2px -2px 5px #ffffff;
+      --accent-color: #FFC8DD;
+      --accent-hover: #ffb3d1;
     }
     
     .stApp { background-color: var(--bg); color: var(--text-primary); font-family: 'Inter', sans-serif; }
     
-    [data-testid="stSidebar"] { background-color: #FDFBFB !important; border-right: 1px solid #E9C3BB; box-shadow: 2px 0 10px rgba(233,195,187, 0.3); }
+    [data-testid="stSidebar"] { background-color: #FDFBFB !important; border-right: 1px solid #FFC8DD; box-shadow: 2px 0 10px rgba(255,200,221, 0.3); }
     [data-testid="stSidebar"] * { color: var(--text-secondary); font-weight: 500; }
     [data-testid="stSidebar"] h1, [data-testid="stSidebar"] p { color: var(--accent-color) !important; font-weight: 800; }
 
     /* Minimalist Widgets */
     .stButton > button {
-        background: #ffffff; border: 1px solid #E9C3BB; border-radius: 8px;
-        box-shadow: 0 2px 5px rgba(202,135,126,0.1);
+        background: #ffffff; border: 1px solid #FFC8DD; border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(255,200,221,0.1);
         color: var(--accent-color); font-weight: 700; transition: all 0.2s;
     }
     .stButton > button:hover { background: var(--accent-hover); color: #C13346; border-color: #E98D9E; }
@@ -42,11 +42,11 @@ st.markdown("""<style>
     /* Metrics */
     [data-testid="stMetric"] {
         background: #ffffff; border-radius: 12px; padding: 15px; margin: 10px 0;
-        border: 1px solid #E9C3BB;
-        box-shadow: 0 4px 12px rgba(202,135,126,0.08); transition: transform 0.2s;
+        border: 1px solid #FFC8DD;
+        box-shadow: 0 4px 12px rgba(255,200,221,0.08); transition: transform 0.2s;
         text-align: center;
     }
-    [data-testid="stMetric"]:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(202,135,126,0.15); }
+    [data-testid="stMetric"]:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(255,200,221,0.15); }
     [data-testid="stMetricValue"] { color: var(--accent-color) !important; font-size: 2.2rem; font-weight: 800; }
     [data-testid="stMetricLabel"] { color: var(--text-secondary) !important; font-weight: bold; }
 
@@ -56,7 +56,7 @@ st.markdown("""<style>
     }
     
     .block-container { position: relative; z-index: 1; padding-top: 2rem; }
-    h1, h2, h3 { color: var(--accent-color) !important; font-weight: 800; border-bottom: 2px solid #E9C3BB; padding-bottom: 10px; margin-bottom: 20px;}
+    h1, h2, h3 { color: var(--accent-color) !important; font-weight: 800; border-bottom: 2px solid #FFC8DD; padding-bottom: 10px; margin-bottom: 20px;}
     p, label { color: var(--text-primary); font-weight: 500; }
 </style>""", unsafe_allow_html=True)
 
