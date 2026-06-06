@@ -33,17 +33,11 @@ st.markdown("""<style>
             radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.4), transparent 40%),
             linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%) !important;
         background-size: 150% 150% !important;
-        animation: floatClouds 15s ease-in-out infinite alternate !important;
         color: var(--text-primary); 
         font-family: 'Outfit', sans-serif !important; 
     }
 
-    @keyframes floatClouds {
-        0% { background-position: 0% 0%; }
-        100% { background-position: 100% 100%; }
-    }
-
-    /* Twinkling Stars Effect */
+    /* Twinkling Stars Effect (Static) */
     .stApp::before {
         content: "";
         position: fixed;
@@ -60,14 +54,8 @@ st.markdown("""<style>
             radial-gradient(3px 3px at 600px 50px, rgba(255,255,255,0.8), rgba(0,0,0,0));
         background-repeat: repeat;
         background-size: 650px 300px;
-        animation: twinkle 3s ease-in-out infinite alternate;
         z-index: 0;
         pointer-events: none;
-    }
-    
-    @keyframes twinkle {
-        0% { opacity: 0.1; transform: scale(0.9); }
-        100% { opacity: 1; transform: scale(1.1); }
     }
     
     /* Ensure content stays above the stars */
