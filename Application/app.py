@@ -18,15 +18,15 @@ st.markdown("""<style>
     @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap');
     
     :root {
-      --bg-color: #F8F5F7; /* Soft off-white pinkish background */
-      --card-bg: #FFFFFF;
+      --bg-color: #FFFFFF; /* Soft off-white pinkish background */
+      --card-bg: #FFF2F6;
       --text-main: #1D1D1F; /* Dark grey almost black */
       --text-muted: #86868B;
       --accent-magenta: #F50057; /* Punchy magenta from the image */
       --accent-purple: #9C27B0;
       --accent-blue: #03A9F4;
-      --shadow-color: rgba(220, 200, 210, 0.5);
-      --border-light: #F0EBEF;
+      --shadow-color: rgba(255, 200, 221, 0.4);
+      --border-light: #FFC8DD;
     }
     
     .stApp { 
@@ -41,7 +41,7 @@ st.markdown("""<style>
 
     /* Sidebar */
     [data-testid="stSidebar"] { 
-        background-color: #FAF8F9 !important; 
+        background-color: #FFFFFF !important; 
         border-right: 1px solid var(--border-light); 
         box-shadow: 4px 0 20px rgba(0,0,0,0.02);
     }
