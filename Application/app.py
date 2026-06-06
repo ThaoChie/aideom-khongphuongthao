@@ -14,115 +14,109 @@ DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__
 st.set_page_config(page_title="AIDEOM-VN Streamlit", layout="wide", initial_sidebar_state="expanded")
 
 st.markdown("""<style>
-    /* Soft Pink Galaxy Glassmorphism Theme */
-    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+    /* Elegant Neumorphic / Soft Pink UI Theme */
+    @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap');
     
     :root {
-      --text-primary: #333333;
-      --text-secondary: #FF5C8D;
-      --accent-color: #FF5C8D;
-      --accent-hover: #ffb3d1;
+      --bg-color: #F8F5F7; /* Soft off-white pinkish background */
+      --card-bg: #FFFFFF;
+      --text-main: #1D1D1F; /* Dark grey almost black */
+      --text-muted: #86868B;
+      --accent-magenta: #F50057; /* Punchy magenta from the image */
+      --accent-purple: #9C27B0;
+      --accent-blue: #03A9F4;
+      --shadow-color: rgba(220, 200, 210, 0.5);
+      --border-light: #F0EBEF;
     }
     
-    /* Static Pink Cloudy Background */
     .stApp { 
-        background-color: #ff9a9e !important;
-        background-image: 
-            radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.5), transparent 40%),
-            radial-gradient(circle at 80% 20%, rgba(255, 200, 221, 0.5), transparent 50%),
-            radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.4), transparent 40%),
-            linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%) !important;
-        background-size: 150% 150% !important;
-        color: var(--text-primary); 
-        font-family: 'Outfit', sans-serif !important; 
+        background-color: var(--bg-color) !important;
+        background-image: none !important; /* Remove starry background */
+        color: var(--text-main); 
+        font-family: 'Nunito Sans', sans-serif !important; 
     }
+    
+    /* Remove stars pseudo-element */
+    .stApp::before { display: none !important; }
 
-    /* Static Stars Effect */
-    .stApp::before {
-        content: "";
-        position: fixed;
-        top: 0; left: 0; right: 0; bottom: 0;
-        width: 100%; height: 100%;
-        background-image: 
-            radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
-            radial-gradient(2px 2px at 80px 70px, #ffffff, rgba(0,0,0,0)),
-            radial-gradient(3px 3px at 150px 160px, rgba(255,255,255,0.8), rgba(0,0,0,0)),
-            radial-gradient(2px 2px at 290px 40px, #ffffff, rgba(0,0,0,0)),
-            radial-gradient(4px 4px at 330px 180px, rgba(255,255,255,0.9), rgba(0,0,0,0)),
-            radial-gradient(2px 2px at 460px 120px, #ffffff, rgba(0,0,0,0)),
-            radial-gradient(2px 2px at 520px 220px, #ffffff, rgba(0,0,0,0)),
-            radial-gradient(3px 3px at 600px 50px, rgba(255,255,255,0.8), rgba(0,0,0,0));
-        background-repeat: repeat;
-        background-size: 650px 300px;
-        opacity: 0.8;
-        z-index: 0;
-        pointer-events: none;
-    }
-    
-    /* Ensure content stays above the stars */
-    .block-container { position: relative; z-index: 1; padding-top: 2rem; }
-    
     /* Sidebar */
     [data-testid="stSidebar"] { 
-        background-color: rgba(255, 255, 255, 0.25) !important; 
-        backdrop-filter: blur(20px) !important;
-        -webkit-backdrop-filter: blur(20px) !important;
-        border-right: 1px solid rgba(255, 255, 255, 0.5); 
-        box-shadow: 2px 0 15px rgba(255,154,158, 0.2); 
+        background-color: #FAF8F9 !important; 
+        border-right: 1px solid var(--border-light); 
+        box-shadow: 4px 0 20px rgba(0,0,0,0.02);
     }
-    [data-testid="stSidebar"] * { color: var(--text-secondary); font-weight: 500; }
-    [data-testid="stSidebar"] h1, [data-testid="stSidebar"] p { color: var(--accent-color) !important; font-weight: 800; }
+    [data-testid="stSidebar"] * { color: var(--text-muted); font-weight: 600; }
+    [data-testid="stSidebar"] h1, [data-testid="stSidebar"] p { color: var(--text-main) !important; font-weight: 800; }
+    
+    /* Active styling in sidebar simulation */
+    [data-testid="stSidebar"] [data-testid="stSidebarNavItems"] li[data-selected="true"] {
+        background-color: rgba(245, 0, 87, 0.05);
+        border-right: 3px solid var(--accent-magenta);
+    }
 
-    /* Glassmorphism Buttons */
+    /* Soft UI Buttons */
     .stButton > button {
-        background: rgba(255, 255, 255, 0.4) !important; 
-        backdrop-filter: blur(10px) !important;
-        border: 1px solid rgba(255, 255, 255, 0.6) !important; 
+        background: #FFFFFF !important; 
+        border: 1px solid var(--border-light) !important; 
         border-radius: 12px !important;
-        box-shadow: 0 4px 10px rgba(255,154,158,0.2) !important;
-        color: var(--accent-color) !important; 
+        box-shadow: 0 4px 12px var(--shadow-color) !important;
+        color: var(--text-main) !important; 
         font-weight: 700 !important; 
-        transition: all 0.3s ease !important;
+        padding: 0.5rem 1rem !important;
+        transition: all 0.2s ease !important;
     }
     .stButton > button:hover { 
-        background: rgba(255, 255, 255, 0.8) !important; 
+        background: var(--accent-magenta) !important; 
+        color: #FFFFFF !important;
+        border-color: var(--accent-magenta) !important;
         transform: translateY(-2px); 
+        box-shadow: 0 6px 16px rgba(245, 0, 87, 0.3) !important;
     }
     
-    /* Glassmorphism Metrics */
+    /* Soft UI Metrics Cards */
     [data-testid="stMetric"] {
-        background: rgba(255, 255, 255, 0.35) !important; 
-        backdrop-filter: blur(15px) !important;
-        -webkit-backdrop-filter: blur(15px) !important;
-        border-radius: 16px !important; 
-        padding: 15px !important; 
+        background: var(--card-bg) !important; 
+        border-radius: 20px !important; 
+        padding: 20px !important; 
         margin: 10px 0 !important;
-        border: 1px solid rgba(255, 255, 255, 0.6) !important;
-        box-shadow: 0 8px 32px rgba(255,154,158,0.15) !important; 
+        border: 1px solid #FFFFFF !important;
+        box-shadow: 0 10px 30px var(--shadow-color) !important; 
         transition: transform 0.2s !important;
-        text-align: center;
+        text-align: left;
     }
-    [data-testid="stMetric"]:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(255,154,158,0.25) !important; }
-    [data-testid="stMetricValue"] { color: var(--accent-color) !important; font-size: 2.2rem !important; font-weight: 800 !important; }
-    [data-testid="stMetricLabel"] { color: var(--text-secondary) !important; font-weight: 700 !important; text-transform: uppercase; font-size: 0.9rem !important; letter-spacing: 1px; }
+    [data-testid="stMetric"]:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(220, 200, 210, 0.7) !important; }
+    [data-testid="stMetricValue"] { color: var(--text-main) !important; font-size: 2.2rem !important; font-weight: 800 !important; }
+    [data-testid="stMetricLabel"] { color: var(--text-muted) !important; font-weight: 700 !important; font-size: 0.95rem !important; margin-bottom: 5px; }
 
-    /* Glassmorphism Containers (for charts) */
+    /* Soft UI Containers (for charts) */
     div[data-testid="stVerticalBlock"] > div[data-testid="stVerticalBlockBorderWrapper"] > div {
-        background: rgba(255, 255, 255, 0.35) !important;
-        backdrop-filter: blur(15px) !important;
-        -webkit-backdrop-filter: blur(15px) !important;
-        border-radius: 16px !important;
-        border: 1px solid rgba(255, 255, 255, 0.6) !important;
-        box-shadow: 0 8px 32px rgba(255,154,158,0.1) !important;
+        background: var(--card-bg) !important;
+        border-radius: 20px !important;
+        border: 1px solid #FFFFFF !important;
+        box-shadow: 0 10px 30px var(--shadow-color) !important;
+        padding: 20px !important;
     }
 
-    /* Input inputs/sliders */
-    div[data-baseweb="slider"] {
-        padding: 5px;
+    /* Tabs */
+    .stTabs [data-baseweb="tab-list"] {
+        background: transparent !important;
+        gap: 20px;
     }
+    .stTabs [data-baseweb="tab"] {
+        color: var(--text-muted) !important;
+        font-weight: 700;
+        padding: 10px 0;
+    }
+    .stTabs [aria-selected="true"] {
+        color: var(--accent-magenta) !important;
+        border-bottom: 3px solid var(--accent-magenta) !important;
+    }
+
+    /* Typography */
+    h1, h2, h3 { color: var(--text-main) !important; font-weight: 800; border: none; margin-bottom: 20px;}
+    p, label { color: var(--text-muted); font-weight: 600; }
     
-    h1, h2, h3 { color: var(--accent-color) !important; font-weight: 800; border-bottom: 2px solid rgba(255, 255, 255, 0.6); padding-bottom: 10px; margin-bottom: 20px;}
-    p, label { color: var(--text-primary); font-weight: 500; }
+    .block-container { position: relative; z-index: 1; padding-top: 2rem; }
 </style>""", unsafe_allow_html=True)
 
 st.sidebar.title("AIDEOM")
@@ -268,11 +262,11 @@ elif page == pages[2]:
             col1, col2 = st.columns(2)
             with col1:
                 fig_g = px.bar(x=list(sc['growth']['scores'].keys()), y=list(sc['growth']['scores'].values()), title="Điểm ưu tiên – Tăng trưởng")
-                fig_g.update_traces(marker_color='#FF8C00')
+                fig_g.update_traces(marker_color='#F50057')
                 st.plotly_chart(fig_g, use_container_width=True)
             with col2:
                 fig_i = px.bar(x=list(sc['inclusive']['scores'].keys()), y=list(sc['inclusive']['scores'].values()), title="Điểm ưu tiên – Bao trùm")
-                fig_i.update_traces(marker_color='#2E8B57')
+                fig_i.update_traces(marker_color='#F50057')
                 st.plotly_chart(fig_i, use_container_width=True)
 
 elif page == pages[3]:
