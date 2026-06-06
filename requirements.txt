@@ -8,7 +8,6 @@ pyomo>=6.6
 gymnasium>=0.29
 pulp>=2.7
 pymoo>=0.6.0
-cvxpy>=1.1.18,<1.5.0
 stable-baselines3>=2.0.0
 pytest>=7.0.0
 ipynb==0.5.1
