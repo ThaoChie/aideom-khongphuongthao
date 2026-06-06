@@ -14,101 +14,50 @@ DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__
 st.set_page_config(page_title="AIDEOM-VN Streamlit", layout="wide", initial_sidebar_state="expanded")
 
 st.markdown("""<style>
-    /* Glassmorphism Theme */
-    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap');
-    
+    /* Minimalist Theme */
     :root {
-      --bg: #a6c1ee; /* fallback */
+      --bg: #FFFFFF;
+      --text-primary: #333333;
+      --text-secondary: #AC5865;
+      --clay-shadow-out: 4px 4px 10px rgba(202,135,126, 0.2), -4px -4px 10px #ffffff;
+      --clay-shadow-in: inset 2px 2px 5px rgba(202,135,126, 0.2), inset -2px -2px 5px #ffffff;
+      --accent-color: #C13346;
+      --accent-hover: #FFC8DD;
     }
     
-    /* App Background Gradient */
-    .stApp {
-        background: linear-gradient(135deg, #8ba8aa 0%, #b3cdd1 50%, #c1d9dd 100%);
-        font-family: 'Outfit', sans-serif !important;
-        color: #1a2f33;
-    }
+    .stApp { background-color: var(--bg); color: var(--text-primary); font-family: 'Inter', sans-serif; }
     
-    /* Sidebar */
-    [data-testid="stSidebar"] {
-        background: rgba(255, 255, 255, 0.1) !important;
-        backdrop-filter: blur(15px) !important;
-        border-right: 1px solid rgba(255, 255, 255, 0.2);
+    [data-testid="stSidebar"] { background-color: #FDFBFB !important; border-right: 1px solid #E9C3BB; box-shadow: 2px 0 10px rgba(233,195,187, 0.3); }
+    [data-testid="stSidebar"] * { color: var(--text-secondary); font-weight: 500; }
+    [data-testid="stSidebar"] h1, [data-testid="stSidebar"] p { color: var(--accent-color) !important; font-weight: 800; }
+
+    /* Minimalist Widgets */
+    .stButton > button {
+        background: #ffffff; border: 1px solid #E9C3BB; border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(202,135,126,0.1);
+        color: var(--accent-color); font-weight: 700; transition: all 0.2s;
     }
-    
-    /* Glassmorphism Containers */
-    div[data-testid="stVerticalBlock"] > div[data-testid="stVerticalBlockBorderWrapper"] > div, 
-    div[data-testid="stExpander"] > div {
-        background: rgba(255, 255, 255, 0.15) !important;
-        backdrop-filter: blur(12px) !important;
-        -webkit-backdrop-filter: blur(12px) !important;
-        border-radius: 16px !important;
-        border: 1px solid rgba(255, 255, 255, 0.3) !important;
-        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07) !important;
-    }
+    .stButton > button:hover { background: var(--accent-hover); color: #C13346; border-color: #E98D9E; }
     
     /* Metrics */
-    div[data-testid="stMetric"] {
-        background: rgba(255, 255, 255, 0.2) !important;
-        backdrop-filter: blur(10px) !important;
-        border-radius: 16px !important;
-        border: 1px solid rgba(255, 255, 255, 0.4) !important;
-        padding: 15px !important;
-        box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.05) !important;
+    [data-testid="stMetric"] {
+        background: #ffffff; border-radius: 12px; padding: 15px; margin: 10px 0;
+        border: 1px solid #E9C3BB;
+        box-shadow: 0 4px 12px rgba(202,135,126,0.08); transition: transform 0.2s;
         text-align: center;
     }
-    
-    div[data-testid="stMetricValue"] > div {
-        color: #1a2f33 !important;
-        font-weight: 600 !important;
-        font-size: 2.2rem !important;
-    }
-    
-    div[data-testid="stMetricLabel"] > div > div > p {
-        color: #3b5a60 !important;
-        font-weight: 500 !important;
-        text-transform: uppercase;
-        font-size: 0.9rem !important;
-        letter-spacing: 1px;
-    }
+    [data-testid="stMetric"]:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(202,135,126,0.15); }
+    [data-testid="stMetricValue"] { color: var(--accent-color) !important; font-size: 2.2rem; font-weight: 800; }
+    [data-testid="stMetricLabel"] { color: var(--text-secondary) !important; font-weight: bold; }
 
-    /* Tabs */
-    .stTabs [data-baseweb="tab-list"] {
-        background: rgba(255, 255, 255, 0.2) !important;
-        border-radius: 12px;
+    /* Input inputs/sliders */
+    div[data-baseweb="slider"] {
         padding: 5px;
-        backdrop-filter: blur(10px);
-    }
-    .stTabs [data-baseweb="tab"] {
-        color: #1a2f33 !important;
     }
     
-    /* Buttons */
-    .stButton > button {
-        background: rgba(255, 255, 255, 0.25) !important;
-        backdrop-filter: blur(10px) !important;
-        border: 1px solid rgba(255, 255, 255, 0.5) !important;
-        border-radius: 12px !important;
-        color: #1a2f33 !important;
-        font-weight: 600 !important;
-        transition: all 0.3s ease !important;
-    }
-    .stButton > button:hover {
-        background: rgba(255, 200, 221, 0.6) !important; /* using #FFC8DD from previous request */
-        transform: translateY(-2px);
-    }
-    
-    /* Headers */
-    h1, h2, h3 {
-        color: #1a2f33 !important;
-        font-weight: 600 !important;
-    }
-    
-    /* Dataframes */
-    .stDataFrame {
-        background: rgba(255, 255, 255, 0.1) !important;
-        backdrop-filter: blur(10px);
-        border-radius: 12px;
-    }
+    .block-container { position: relative; z-index: 1; padding-top: 2rem; }
+    h1, h2, h3 { color: var(--accent-color) !important; font-weight: 800; border-bottom: 2px solid #E9C3BB; padding-bottom: 10px; margin-bottom: 20px;}
+    p, label { color: var(--text-primary); font-weight: 500; }
 </style>""", unsafe_allow_html=True)
 
 st.sidebar.title("AIDEOM")
