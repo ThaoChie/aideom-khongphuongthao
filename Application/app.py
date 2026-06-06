@@ -18,8 +18,8 @@ st.markdown("""<style>
     @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap');
     
     :root {
-      --bg-color: #FFFFFF; /* Soft off-white pinkish background */
-      --card-bg: #FFF2F6;
+      --bg-color: #FFFFFF; /* Pure white app background */
+      --card-bg: #FFE5EE; /* Stronger pink tint for cards */
       --text-main: #1D1D1F; /* Dark grey almost black */
       --text-muted: #86868B;
       --accent-magenta: #F50057; /* Punchy magenta from the image */
@@ -79,10 +79,11 @@ st.markdown("""<style>
         border-radius: 20px !important; 
         padding: 20px !important; 
         margin: 10px 0 !important;
-        border: 1px solid #FFFFFF !important;
+        border: 1px solid var(--border-light) !important;
         box-shadow: 0 10px 30px var(--shadow-color) !important; 
         transition: transform 0.2s !important;
         text-align: left;
+        height: 100% !important;
     }
     [data-testid="stMetric"]:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(220, 200, 210, 0.7) !important; }
     [data-testid="stMetricValue"] { color: var(--text-main) !important; font-size: 2.2rem !important; font-weight: 800 !important; }
