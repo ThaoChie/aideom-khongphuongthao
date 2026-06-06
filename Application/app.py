@@ -114,6 +114,7 @@ pages = [
 col_nav_global, col_content_global = st.columns([1, 4], gap="large")
 
 with col_nav_global:
+    st.title(" ")
     with st.container(border=True):
         st.markdown("<h3 style='margin-bottom: 0;'>AIDEOM</h3>", unsafe_allow_html=True)
         st.caption("Khổng Phương Thảo")
