@@ -65,7 +65,10 @@ st.markdown("""<style>
         padding: 20px !important; 
         margin: 10px 0 !important;
         text-align: center;
-        height: 100% !important;
+        min-height: 140px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
     }
     [data-testid="stMetricValue"] { color: var(--accent-pink) !important; font-size: 2.2rem !important; font-weight: 700 !important; }
     [data-testid="stMetricLabel"] { color: var(--text-muted) !important; font-weight: 600 !important; font-size: 0.95rem !important; margin-bottom: 5px; text-transform: uppercase;}
