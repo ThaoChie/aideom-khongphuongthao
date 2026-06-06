@@ -18,10 +18,10 @@ st.markdown("""<style>
     :root {
       --bg: #FFFFFF;
       --text-primary: #333333;
-      --text-secondary: #FFC8DD;
+      --text-secondary: #FF5C8D;
       --clay-shadow-out: 4px 4px 10px rgba(255,200,221, 0.2), -4px -4px 10px #ffffff;
       --clay-shadow-in: inset 2px 2px 5px rgba(255,200,221, 0.2), inset -2px -2px 5px #ffffff;
-      --accent-color: #FFC8DD;
+      --accent-color: #FF5C8D;
       --accent-hover: #ffb3d1;
     }
     
