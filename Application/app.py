@@ -139,7 +139,7 @@ if page == pages[0]:
             df_contrib = pd.DataFrame({'Yếu tố': list(contrib.keys()), 'Đóng góp (%)': list(contrib.values())})
             col1, col2 = st.columns([1, 2])
             with col1:
-                st.dataframe(df_contrib, use_container_width=True, hide_index=True)
+                st.dataframe(df_contrib.style.set_properties(**{'font-weight': '700'}), use_container_width=True, hide_index=True)
             with col2:
                 fig_decomp = px.bar(df_contrib, x='Yếu tố', y='Đóng góp (%)', title="Đóng góp vào tăng trưởng GDP (%)", color='Yếu tố')
                 fig_decomp.update_layout(showlegend=False)
@@ -180,7 +180,7 @@ elif page == pages[1]:
             if res['dual_values']:
                 dual_labels = {'C1_Budget': 'C1: Ngân sách tổng', 'C2_Tech35': 'C2: Tỷ lệ công nghệ ≥ 35%', 'C3_MinI': 'C3: Min Hạ tầng (I)', 'C4_MinAI': 'C4: Min AI', 'C5_MinH': 'C5: Min Nhân lực (H)', 'C6_MinRD': 'C6: Min R&D'}
                 df_dual = pd.DataFrame({'Ràng buộc': [dual_labels.get(k, k) for k in res['dual_values'].keys()], 'Shadow Price (π)': list(res['dual_values'].values())})
-                st.dataframe(df_dual, use_container_width=True, hide_index=True)
+                st.dataframe(df_dual.style.set_properties(**{'font-weight': '700'}), use_container_width=True, hide_index=True)
             else:
                 st.warning("Không có dual values.")
         with st.container(border=True):
@@ -218,7 +218,7 @@ elif page == pages[2]:
         with st.container(border=True):
             st.subheader("1. Ma trận chuẩn hóa Min-Max (đảo dấu Rủi ro)")
             df_norm = pd.DataFrame(res['norm_matrix'], columns=res['col_names'], index=res['sectors'])
-            st.dataframe(df_norm.style.format("{:.4f}"), use_container_width=True)
+            st.dataframe(df_norm.style.set_properties(**{'font-weight': '700'}).format("{:.4f}"), use_container_width=True)
         with st.container(border=True):
             st.subheader("2. Xếp hạng 10 ngành theo Priority")
             names = [r['sector_name_vi'] for r in res['ranking']]
@@ -261,7 +261,7 @@ elif page == pages[3]:
             if res['status'] == 'Optimal':
                 st.success(f"Z* (PuLP) = {res['Z']:,.1f}")
                 df_pulp = pd.DataFrame(res['allocation']).T
-                st.dataframe(df_pulp.style.format("{:,.1f}"), use_container_width=True)
+                st.dataframe(df_pulp.style.set_properties(**{'font-weight': '700'}).format("{:,.1f}"), use_container_width=True)
             else:
                 st.error("Không khả thi.")
 
@@ -303,7 +303,7 @@ elif page == pages[4]:
             c4.metric("NPV Biên (Z*/Cost)", f"{res['npv_margin']:.4f}")
             if res['selected']:
                 df_proj = pd.DataFrame(res['projects']).T
-                st.dataframe(df_proj.style.format("{:.2f}"), use_container_width=True)
+                st.dataframe(df_proj.style.set_properties(**{'font-weight': '700'}).format("{:.2f}"), use_container_width=True)
             else:
                 st.warning("Infeasible")
         with st.container(border=True):
@@ -364,7 +364,7 @@ elif page == pages[5]:
         with st.container(border=True):
             st.subheader("4. So sánh phương pháp: TOPSIS vs AHP đơn giản")
             df_comp = pd.DataFrame(res['ranks_comparison'])
-            st.dataframe(df_comp, use_container_width=True)
+            st.dataframe(df_comp.style.set_properties(**{'font-weight': '700'}), use_container_width=True)
 
 elif page == pages[6]:
     st.title("Bài 7: Tối ưu đa mục tiêu (NSGA-II)")
@@ -450,7 +450,7 @@ elif page == pages[8]:
             st.subheader("1. Phân bổ tối ưu (PuLP)")
             st.metric("Tổng Việc làm ròng (NetJob)", f"{res['total_net']:,.2f} triệu")
             df_sectors = pd.DataFrame(res['sector_table']).T
-            st.dataframe(df_sectors.style.format("{:.3f}"), use_container_width=True)
+            st.dataframe(df_sectors.style.set_properties(**{'font-weight': '700'}).format("{:.3f}"), use_container_width=True)
 
         with st.container(border=True):
             st.subheader("2. Ngưỡng đầu tư đào tạo ngành Chế biến chế tạo (Ngành 2)")
@@ -502,7 +502,7 @@ elif page == pages[9]:
         with st.container(border=True):
             st.subheader("2. Quyết định phân bổ Giai đoạn 1")
             df_alloc = pd.DataFrame(res['sp_alloc']).T
-            st.dataframe(df_alloc.style.format("{:.2f}"), use_container_width=True)
+            st.dataframe(df_alloc.style.set_properties(**{'font-weight': '700'}).format("{:.2f}"), use_container_width=True)
         with st.container(border=True):
             st.subheader("3. Robust Optimization")
             categories = ['I', 'D', 'AI', 'H']
@@ -542,7 +542,7 @@ elif page == pages[10]:
         with st.container(border=True):
             st.subheader("2. Chính sách tối ưu $\\pi^*(s)$ tại các trạng thái khởi đầu")
             df_policies = pd.DataFrame(list(res['extracted_policies'].items()), columns=["Trạng thái giả định", "Hành động (Policy) được chọn"])
-            st.dataframe(df_policies, use_container_width=True)
+            st.dataframe(df_policies.style.set_properties(**{'font-weight': '700'}), use_container_width=True)
 
         with st.container(border=True):
             st.subheader("3. So sánh phần thưởng tích lũy trung bình")
@@ -610,7 +610,7 @@ elif page == pages[11]:
                         f"{s5['labor_impact']['net_total']:,.1f}"
                     ]
                 }
-                st.dataframe(pd.DataFrame(comp_data), use_container_width=True)
+                st.dataframe(pd.DataFrame(comp_data).style.set_properties(**{'font-weight': '700'}), use_container_width=True)
                 st.info("💡 **Phân tích:** Kịch bản S3 (AI dẫn dắt) cho GDP cao nhất nhưng rủi ro việc làm và an toàn hệ thống lớn. S5 (Cân bằng) hy sinh một phần GDP để duy trì an sinh xã hội và giảm rủi ro.")
         
         with tab3:
