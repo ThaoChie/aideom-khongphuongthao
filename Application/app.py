@@ -98,7 +98,8 @@ st.markdown("""<style>
     }
 
     /* Typography */
-    h1, h2, h3 { color: var(--text-main) !important; font-weight: 800; border: none; margin-bottom: 20px;}
+    h1, h2 { color: var(--text-main) !important; font-weight: 800; border: none; margin-bottom: 20px;}
+    h3 { color: var(--accent-pink) !important; font-weight: 800; border: none; margin-bottom: 20px;}
     p, label { color: var(--text-muted); font-weight: 500; }
     
     .block-container { position: relative; z-index: 1; padding-top: 2rem; }
