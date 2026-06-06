@@ -1,45 +1,14 @@
+
 services:
-  db:
-    image: mysql:8.0
+  streamlit-app:
+    build: .
+    container_name: aideom_vn_app
+    ports:
+      - "8501:8501"
+    volumes:
+      # Mount code directory để khi code thay đổi ở máy thật (hoặc VS Code), nó sẽ cập nhật vào container
+      - .:/app
     environment:
-      MYSQL_DATABASE: ${MYSQL_DATABASE:-aideom}
-      MYSQL_USER: ${MYSQL_USER:-aideom}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-aideom_password}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_password}
-    ports:
-      - "3307:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-root_password}"]
-      interval: 5s
-      timeout: 5s
-      retries: 20
-
-  backend:
-    build: ./backend
-    env_file: .env
-    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
-    ports:
-      - "8001:8000"
-    depends_on:
-      db:
-        condition: service_healthy
-    volumes:
-      - ./backend:/app
-
-  frontend:
-    build: ./frontend
-    environment:
-      VITE_API_BASE_URL: ${VITE_API_BASE_URL:-http://localhost:8001/api}
-    command: npm run dev -- --host 0.0.0.0
-    ports:
-      - "5173:5173"
-    depends_on:
-      - backend
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
-
-volumes:
-  mysql_data:
+      - PYTHONUNBUFFERED=1
+    # Tự động khởi động lại container nếu có lỗi
+    restart: unless-stopped

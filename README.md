@@ -1,90 +1,63 @@
-# AIDEOM-VN eLearning Decision Lab v5
+# AIDEOM-VN Dashboard
 
-Bản thiết kế lại theo change request:
+**AIDEOM-VN** (Artificial Intelligence and Digital Economy Optimization Models for Vietnam) là một hệ thống hỗ trợ ra quyết định đa mô hình, được xây dựng để đánh giá tác động của Chuyển đổi số và Trí tuệ Nhân tạo (AI) lên nền kinh tế, thị trường lao động và chiến lược phân bổ ngân sách của Việt Nam. Hệ thống bao gồm 12 bài toán mô phỏng tối ưu hóa từ quy mô vĩ mô đến vi mô, được tích hợp vào một Dashboard trực quan.
 
-- Chuyển từ dashboard tổng hợp sang mô hình **eLearning 11 bài học**.
-- Sidebar trái hiển thị đầy đủ **Bài 1 → Bài 11**.
-- Mỗi bài có **file Python độc lập** tại `backend/core/lessons/lessonXX_*.py`.
-- Hệ số/tham số đề xuất của từng mô hình có thể **tinh chỉnh bằng slider/input** trên web.
-- Mỗi bài có dashboard tối thiểu 4 tab:
-  1. Tổng quan
-  2. Phân bổ
-  3. Kịch bản so sánh
-  4. Cảnh báo rủi ro
-- Giữ phong cách UI/UX hiện tại: light futuristic minimalism, card bo góc lớn, gradient xanh, dashboard SaaS.
+## Cấu trúc thư mục
 
-## Chạy nhanh bằng Docker
+- `Application/`: Chứa mã nguồn của giao diện Dashboard xây dựng bằng Streamlit (`app.py`).
+- `src/`: Mã nguồn Python lõi chứa các hàm tối ưu hóa (`optimization.py`, `rl_env.py`, `data_loader.py`).
+- `notebooks/`: Các file Jupyter Notebook giải thích chi tiết thuật toán và biểu diễn dữ liệu của từng bài toán.
+- `data/`: Dữ liệu đầu vào ở định dạng CSV (Macro 2020-2025, Sectors 2024, Regions 2024).
 
+---
+
+## Hướng dẫn cài đặt và chạy trên Local (macOS & Windows)
+
+### Yêu cầu hệ thống
+- **Python:** Phiên bản 3.9 trở lên (Khuyến nghị 3.11 hoặc 3.12).
+- Các thư viện cần thiết đã được liệt kê trong file `requirements.txt`.
+
+### Bước 1: Clone hoặc tải mã nguồn về máy
+Mở Terminal (macOS) hoặc Command Prompt / PowerShell (Windows) và di chuyển vào thư mục dự án:
 ```bash
-cp .env.example .env
-docker compose up --build --force-recreate
+cd du-an-aideom-vn
 ```
 
-Truy cập:
+### Bước 2: Tạo và kích hoạt môi trường ảo (Virtual Environment)
+Việc sử dụng môi trường ảo giúp tránh xung đột thư viện giữa các dự án trên máy.
 
-- Frontend: http://localhost:5173
-- Backend API: http://localhost:8001/api
-- MySQL host port: 3307
-
-> Bản này dùng port `8001` và `3307` để tránh xung đột với các container cũ đang dùng `8000`/`3306`.
-
-## API chính
-
-```text
-GET  /api/health/
-GET  /api/lessons/
-GET  /api/lessons/<lesson_id>/
-POST /api/lessons/<lesson_id>/run/
-POST /api/pipeline/run/
-```
-
-Ví dụ:
-
+**Trên macOS:**
 ```bash
-curl http://localhost:8001/api/lessons/
-
-curl -X POST http://localhost:8001/api/lessons/lesson01/run/   -H 'Content-Type: application/json'   -d '{"params":{"alpha":0.33,"beta":0.42,"gamma":0.10,"delta":0.08,"theta":0.07}}'
-```
-
-## Chạy local backend
-
-```bash
-cd backend
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt
-python manage.py migrate
-python manage.py runserver 0.0.0.0:8000
 ```
 
-## Chạy local frontend
-
+**Trên Windows:**
 ```bash
-cd frontend
-npm install
-VITE_API_BASE_URL=http://localhost:8000/api npm run dev
+python -m venv .venv
+.venv\Scripts\activate
 ```
 
-## Cấu trúc chính
+### Bước 3: Cài đặt các thư viện cần thiết
+Đảm bảo bạn đang ở trong môi trường ảo (có chữ `(.venv)` ở đầu dòng lệnh), sau đó chạy lệnh cài đặt:
+```bash
+pip install -r requirements.txt
+```
+*Lưu ý: Quá trình này có thể mất vài phút để tải các gói như `numpy`, `pandas`, `streamlit`, `stable-baselines3`, `pulp`, `cvxpy`,...*
 
-```text
-backend/core/lessons/
-  lesson01_cobb_douglas.py
-  lesson02_simple_lp.py
-  lesson03_priority_index.py
-  lesson04_region_lp.py
-  lesson05_mip_projects.py
-  lesson06_topsis.py
-  lesson07_nsga_pareto.py
-  lesson08_dynamic_optimization.py
-  lesson09_labor_ai.py
-  lesson10_stochastic.py
-  lesson11_q_learning.py
-frontend/src/
-  App.jsx
-  style.css
+### Bước 4: Khởi chạy Dashboard
+Chạy lệnh sau để khởi động ứng dụng Streamlit:
+```bash
+streamlit run Application/app.py
 ```
 
-## Lưu ý triển khai
+Sau khi chạy lệnh, trình duyệt web mặc định của bạn sẽ tự động mở lên địa chỉ:
+👉 **http://localhost:8501**
 
-Đây là bản prototype sạch để demo đồ án/eLearning. Các solver nặng như NSGA-II/Pyomo/DQN được mô phỏng gọn bằng NumPy/SciPy để chạy ổn định trên máy cá nhân và Docker. Có thể thay từng `lessonXX_*.py` bằng implementation học thuật đầy đủ sau này mà không đổi giao diện.
+Từ đây, bạn có thể tương tác với giao diện của cả 12 Bài toán thông qua menu điều hướng bên trái.
+
+---
+
+## Khắc phục sự cố thường gặp (Troubleshooting)
+- **Lỗi không tìm thấy module (`ModuleNotFoundError`)**: Chắc chắn rằng bạn đã kích hoạt môi trường ảo `.venv` và đã chạy lệnh `pip install -r requirements.txt`.
+- **Lỗi cổng (Port already in use)**: Nếu cổng 8501 đã bị sử dụng, Streamlit sẽ tự động tìm cổng 8502, 8503... Bạn cũng có thể tự định nghĩa cổng chạy bằng tham số `--server.port`, ví dụ: `streamlit run Application/app.py --server.port 8080`.
