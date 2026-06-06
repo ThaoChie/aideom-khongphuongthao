@@ -11,7 +11,7 @@ from src.rl_env import solve_bai11
 
 DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data')
 
-st.set_page_config(page_title="AIDEOM-VN Streamlit", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="AIDEOM-VN Streamlit", layout="wide", initial_sidebar_state="collapsed")
 
 st.markdown("""<style>
     /* Flat White & Pink Dashboard Theme */
@@ -104,18 +104,20 @@ st.markdown("""<style>
     .block-container { position: relative; z-index: 1; padding-top: 2rem; }
 </style>""", unsafe_allow_html=True)
 
-st.sidebar.title("AIDEOM")
-st.sidebar.caption("Khổng Phương Thảo")
-
 pages = [
     "Bài 1: Cobb-Douglas", "Bài 2: LP Ngân sách", "Bài 3: Chỉ số ưu tiên",
     "Bài 4: LP Phân bổ vùng", "Bài 5: MIP Lựa chọn dự án", "Bài 6: TOPSIS",
     "Bài 7: Tối ưu đa mục tiêu", "Bài 8: Tối ưu động", "Bài 9: Mô phỏng lao động",
     "Bài 10: Quy hoạch ngẫu nhiên", "Bài 11: Q-learning", "Bài 12: Đồ án tổng hợp"
 ]
-page = st.sidebar.radio("Chọn module:", pages)
 
-st.sidebar.markdown("---")
+with st.container(border=True):
+    col_nav1, col_nav2 = st.columns([1, 3])
+    with col_nav1:
+        st.markdown("<h3 style='margin-bottom: 0;'>AIDEOM</h3>", unsafe_allow_html=True)
+        st.caption("Khổng Phương Thảo")
+    with col_nav2:
+        page = st.selectbox("Chọn module bài tập:", pages, label_visibility="collapsed")
 LINE_COLOR = '#C13346'
 
 if page == pages[0]:
