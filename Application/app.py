@@ -14,62 +14,70 @@ DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__
 st.set_page_config(page_title="AIDEOM-VN Streamlit", layout="wide", initial_sidebar_state="expanded")
 
 st.markdown("""<style>
-    /* Exact Neumorphism Pink Dashboard Theme */
-    @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800;900&display=swap');
+    /* Flat White & Pink Dashboard Theme */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
     
     :root {
-      --text-main: #1D1D1F; 
-      --text-muted: #86868B;
-      --accent-magenta: #F50057; /* The bright magenta from the image */
+      --text-main: #000000; 
+      --text-muted: #333333;
+      --accent-pink: #F50057; /* Bright pink for values and charts */
+      --card-pink: #FFE4EE; /* Soft pink for metric cards */
     }
     
     .stApp { 
-        background: radial-gradient(circle at bottom left, #ffa6c9 0%, #ffd1e3 30%, #fdf8fa 80%) !important;
+        background: #FFFFFF !important;
         color: var(--text-main); 
-        font-family: 'Nunito Sans', sans-serif !important; 
+        font-family: 'Inter', sans-serif !important; 
     }
     
+    /* Remove stars pseudo-element if any */
+    .stApp::before { display: none !important; }
+
     /* Sidebar */
     [data-testid="stSidebar"] { 
-        background-color: rgba(253, 248, 250, 0.6) !important; 
-        backdrop-filter: blur(20px) !important;
-        -webkit-backdrop-filter: blur(20px) !important;
-        border-right: 1px solid rgba(255, 255, 255, 0.8); 
-        box-shadow: 4px 0 30px rgba(245, 0, 87, 0.05);
+        background-color: #FFFFFF !important; 
+        border-right: 1px solid #E0E0E0; 
+        box-shadow: none;
     }
-    [data-testid="stSidebar"] * { color: var(--text-muted); font-weight: 600; }
-    [data-testid="stSidebar"] h1, [data-testid="stSidebar"] p { color: var(--text-main) !important; font-weight: 900; }
+    [data-testid="stSidebar"] * { color: var(--text-muted); font-weight: 500; }
+    [data-testid="stSidebar"] h1, [data-testid="stSidebar"] p { color: var(--text-main) !important; font-weight: 700; }
 
     /* Soft UI Buttons */
     .stButton > button {
-        background: var(--accent-magenta) !important; 
+        background: var(--accent-pink) !important; 
         border: none !important; 
-        border-radius: 12px !important;
-        box-shadow: 0 8px 20px rgba(245, 0, 87, 0.3) !important;
+        border-radius: 8px !important;
         color: #FFFFFF !important; 
-        font-weight: 800 !important; 
+        font-weight: 600 !important; 
         padding: 0.5rem 1.5rem !important;
-        transition: all 0.3s ease !important;
+        transition: opacity 0.2s !important;
     }
     .stButton > button:hover { 
-        transform: translateY(-2px); 
-        box-shadow: 0 12px 25px rgba(245, 0, 87, 0.4) !important;
+        opacity: 0.8;
     }
     
-    /* White Soft UI Cards */
-    [data-testid="stMetric"], div[data-testid="stVerticalBlock"] > div[data-testid="stVerticalBlockBorderWrapper"] > div {
-        background: rgba(255, 255, 255, 0.85) !important; 
-        backdrop-filter: blur(20px) !important;
-        -webkit-backdrop-filter: blur(20px) !important;
-        border-radius: 24px !important; 
-        border: 2px solid rgba(255, 255, 255, 1) !important;
-        box-shadow: 0 15px 35px rgba(233, 30, 99, 0.08) !important; 
-        transition: transform 0.3s !important;
+    /* Pink Metric Cards */
+    [data-testid="stMetric"] {
+        background: var(--card-pink) !important; 
+        border-radius: 12px !important; 
+        border: none !important;
+        box-shadow: none !important; 
+        padding: 20px !important; 
+        margin: 10px 0 !important;
+        text-align: center;
+        height: 100% !important;
     }
-    [data-testid="stMetric"] { padding: 20px !important; margin: 10px 0 !important; text-align: left; height: 100% !important; }
-    [data-testid="stMetric"]:hover { transform: translateY(-3px); box-shadow: 0 20px 45px rgba(233, 30, 99, 0.12) !important; }
-    [data-testid="stMetricValue"] { color: var(--text-main) !important; font-size: 2.2rem !important; font-weight: 900 !important; }
-    [data-testid="stMetricLabel"] { color: var(--text-muted) !important; font-weight: 700 !important; font-size: 0.95rem !important; margin-bottom: 5px; }
+    [data-testid="stMetricValue"] { color: var(--accent-pink) !important; font-size: 2.2rem !important; font-weight: 700 !important; }
+    [data-testid="stMetricLabel"] { color: var(--text-muted) !important; font-weight: 600 !important; font-size: 0.95rem !important; margin-bottom: 5px; text-transform: uppercase;}
+
+    /* White Chart Containers */
+    div[data-testid="stVerticalBlock"] > div[data-testid="stVerticalBlockBorderWrapper"] > div {
+        background: #FFFFFF !important; 
+        border-radius: 12px !important; 
+        border: 1px solid #F0F0F0 !important;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.03) !important; 
+        padding: 20px !important;
+    }
 
     /* Tabs */
     .stTabs [data-baseweb="tab-list"] {
@@ -78,17 +86,17 @@ st.markdown("""<style>
     }
     .stTabs [data-baseweb="tab"] {
         color: var(--text-muted) !important;
-        font-weight: 800;
+        font-weight: 600;
         padding: 10px 0;
     }
     .stTabs [aria-selected="true"] {
-        color: var(--text-main) !important;
-        border-bottom: 3px solid var(--accent-magenta) !important;
+        color: var(--accent-pink) !important;
+        border-bottom: 3px solid var(--accent-pink) !important;
     }
 
     /* Typography */
-    h1, h2, h3 { color: var(--text-main) !important; font-weight: 900; border: none; margin-bottom: 20px;}
-    p, label { color: var(--text-muted); font-weight: 600; }
+    h1, h2, h3 { color: var(--text-main) !important; font-weight: 800; border: none; margin-bottom: 20px;}
+    p, label { color: var(--text-muted); font-weight: 500; }
     
     .block-container { position: relative; z-index: 1; padding-top: 2rem; }
 </style>""", unsafe_allow_html=True)
@@ -228,7 +236,7 @@ elif page == pages[2]:
         with st.container(border=True):
             st.subheader("3. Phân tích độ nhạy: Trọng số AI Readiness (a₆)")
             df_heatmap = pd.DataFrame(res['heatmap_data'], columns=[f"a₆={v}" for v in res['a6_values']], index=res['sectors'])
-            fig_hm = px.imshow(df_heatmap, title="Heatmap Priority theo a₆", color_continuous_scale="Reds", aspect="auto", text_auto=".3f")
+            fig_hm = px.imshow(df_heatmap, title="Heatmap Priority theo a₆", color_continuous_scale=['#FFCDD2', '#FF4081'], aspect="auto", text_auto=".3f")
             st.plotly_chart(fig_hm, use_container_width=True)
         with st.container(border=True):
             st.subheader("4. So sánh: Tăng trưởng vs Bao trùm")
@@ -236,11 +244,11 @@ elif page == pages[2]:
             col1, col2 = st.columns(2)
             with col1:
                 fig_g = px.bar(x=list(sc['growth']['scores'].keys()), y=list(sc['growth']['scores'].values()), title="Điểm ưu tiên – Tăng trưởng")
-                fig_g.update_traces(marker_color='#F50057')
+                fig_g.update_traces(marker_color='#FF4081')
                 st.plotly_chart(fig_g, use_container_width=True)
             with col2:
                 fig_i = px.bar(x=list(sc['inclusive']['scores'].keys()), y=list(sc['inclusive']['scores'].values()), title="Điểm ưu tiên – Bao trùm")
-                fig_i.update_traces(marker_color='#F50057')
+                fig_i.update_traces(marker_color='#FF4081')
                 st.plotly_chart(fig_i, use_container_width=True)
 
 elif page == pages[3]:
@@ -269,7 +277,7 @@ elif page == pages[3]:
             st.subheader("2. Heatmap phân bổ tối ưu")
             if res['status'] == 'Optimal':
                 df_hm = pd.DataFrame(res['allocation']).T
-                fig = px.imshow(df_hm, labels=dict(x="Hạng mục", y="Vùng", color="Ngân sách"), color_continuous_scale="Reds", aspect="auto", text_auto=",.0f")
+                fig = px.imshow(df_hm, labels=dict(x="Hạng mục", y="Vùng", color="Ngân sách"), color_continuous_scale=['#FFCDD2', '#FF4081'], aspect="auto", text_auto=",.0f")
                 st.plotly_chart(fig, use_container_width=True)
         with st.container(border=True):
             st.subheader("3. Chi phí kinh tế của công bằng vùng miền (bỏ C5)")
@@ -278,7 +286,7 @@ elif page == pages[3]:
             col2.metric("Z* không C5", f"{res['no_equity_z']:,.1f}")
             col3.metric("Chi phí công bằng (ΔZ)", f"{res['equity_cost']:,.1f} tỷ VND", delta=f"-{res['equity_cost']:,.1f}")
             df_noeq = pd.DataFrame(res['no_equity_alloc']).T
-            fig_noeq = px.imshow(df_noeq, title="Heatmap KHÔNG có ràng buộc công bằng (bỏ C5)", color_continuous_scale="Reds", aspect="auto", text_auto=",.0f")
+            fig_noeq = px.imshow(df_noeq, title="Heatmap KHÔNG có ràng buộc công bằng (bỏ C5)", color_continuous_scale=['#FFCDD2', '#FF4081'], aspect="auto", text_auto=",.0f")
             st.plotly_chart(fig_noeq, use_container_width=True)
 
 elif page == pages[4]:
@@ -359,7 +367,7 @@ elif page == pages[5]:
                     sens_data.append({"w_AI": w_val, "Region": region, "Score": score})
             df_sens = pd.DataFrame(sens_data)
             df_pivot = df_sens.pivot(index="Region", columns="w_AI", values="Score")
-            fig_heat = px.imshow(df_pivot, text_auto=".3f", aspect="auto", color_continuous_scale="Reds")
+            fig_heat = px.imshow(df_pivot, text_auto=".3f", aspect="auto", color_continuous_scale=['#FFCDD2', '#FF4081'])
             st.plotly_chart(fig_heat, use_container_width=True)
         with st.container(border=True):
             st.subheader("4. So sánh phương pháp: TOPSIS vs AHP đơn giản")
