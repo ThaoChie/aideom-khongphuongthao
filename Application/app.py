@@ -14,7 +14,7 @@ DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__
 st.set_page_config(page_title="AIDEOM-VN Streamlit", layout="wide", initial_sidebar_state="expanded")
 
 st.markdown("""<style>
-    /* Soft Pink Glassmorphism Theme */
+    /* Soft Pink Galaxy Glassmorphism Theme */
     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
     
     :root {
@@ -24,20 +24,62 @@ st.markdown("""<style>
       --accent-hover: #ffb3d1;
     }
     
-    /* Soft Pink Gradient Background */
+    /* Animated Pink Cloudy Background */
     .stApp { 
-        background: linear-gradient(135deg, #ffe0e9 0%, #ffc2d4 100%) !important; 
+        background-color: #ff9a9e !important;
+        background-image: 
+            radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.5), transparent 40%),
+            radial-gradient(circle at 80% 20%, rgba(255, 200, 221, 0.5), transparent 50%),
+            radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.4), transparent 40%),
+            linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%) !important;
+        background-size: 150% 150% !important;
+        animation: floatClouds 15s ease-in-out infinite alternate !important;
         color: var(--text-primary); 
         font-family: 'Outfit', sans-serif !important; 
     }
+
+    @keyframes floatClouds {
+        0% { background-position: 0% 0%; }
+        100% { background-position: 100% 100%; }
+    }
+
+    /* Twinkling Stars Effect */
+    .stApp::before {
+        content: "";
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        width: 100%; height: 100%;
+        background-image: 
+            radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+            radial-gradient(2px 2px at 80px 70px, #ffffff, rgba(0,0,0,0)),
+            radial-gradient(3px 3px at 150px 160px, rgba(255,255,255,0.8), rgba(0,0,0,0)),
+            radial-gradient(2px 2px at 290px 40px, #ffffff, rgba(0,0,0,0)),
+            radial-gradient(4px 4px at 330px 180px, rgba(255,255,255,0.9), rgba(0,0,0,0)),
+            radial-gradient(2px 2px at 460px 120px, #ffffff, rgba(0,0,0,0)),
+            radial-gradient(2px 2px at 520px 220px, #ffffff, rgba(0,0,0,0)),
+            radial-gradient(3px 3px at 600px 50px, rgba(255,255,255,0.8), rgba(0,0,0,0));
+        background-repeat: repeat;
+        background-size: 650px 300px;
+        animation: twinkle 3s ease-in-out infinite alternate;
+        z-index: 0;
+        pointer-events: none;
+    }
+    
+    @keyframes twinkle {
+        0% { opacity: 0.1; transform: scale(0.9); }
+        100% { opacity: 1; transform: scale(1.1); }
+    }
+    
+    /* Ensure content stays above the stars */
+    .block-container { position: relative; z-index: 1; padding-top: 2rem; }
     
     /* Sidebar */
     [data-testid="stSidebar"] { 
-        background-color: rgba(255, 255, 255, 0.3) !important; 
-        backdrop-filter: blur(15px) !important;
-        -webkit-backdrop-filter: blur(15px) !important;
+        background-color: rgba(255, 255, 255, 0.25) !important; 
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
         border-right: 1px solid rgba(255, 255, 255, 0.5); 
-        box-shadow: 2px 0 10px rgba(255,200,221, 0.2); 
+        box-shadow: 2px 0 15px rgba(255,154,158, 0.2); 
     }
     [data-testid="stSidebar"] * { color: var(--text-secondary); font-weight: 500; }
     [data-testid="stSidebar"] h1, [data-testid="stSidebar"] p { color: var(--accent-color) !important; font-weight: 800; }
@@ -48,7 +90,7 @@ st.markdown("""<style>
         backdrop-filter: blur(10px) !important;
         border: 1px solid rgba(255, 255, 255, 0.6) !important; 
         border-radius: 12px !important;
-        box-shadow: 0 4px 10px rgba(255,200,221,0.2) !important;
+        box-shadow: 0 4px 10px rgba(255,154,158,0.2) !important;
         color: var(--accent-color) !important; 
         font-weight: 700 !important; 
         transition: all 0.3s ease !important;
@@ -67,11 +109,11 @@ st.markdown("""<style>
         padding: 15px !important; 
         margin: 10px 0 !important;
         border: 1px solid rgba(255, 255, 255, 0.6) !important;
-        box-shadow: 0 8px 32px rgba(255,182,193,0.15) !important; 
+        box-shadow: 0 8px 32px rgba(255,154,158,0.15) !important; 
         transition: transform 0.2s !important;
         text-align: center;
     }
-    [data-testid="stMetric"]:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(255,182,193,0.25) !important; }
+    [data-testid="stMetric"]:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(255,154,158,0.25) !important; }
     [data-testid="stMetricValue"] { color: var(--accent-color) !important; font-size: 2.2rem !important; font-weight: 800 !important; }
     [data-testid="stMetricLabel"] { color: var(--text-secondary) !important; font-weight: 700 !important; text-transform: uppercase; font-size: 0.9rem !important; letter-spacing: 1px; }
 
@@ -82,7 +124,7 @@ st.markdown("""<style>
         -webkit-backdrop-filter: blur(15px) !important;
         border-radius: 16px !important;
         border: 1px solid rgba(255, 255, 255, 0.6) !important;
-        box-shadow: 0 8px 32px rgba(255,182,193,0.1) !important;
+        box-shadow: 0 8px 32px rgba(255,154,158,0.1) !important;
     }
 
     /* Input inputs/sliders */
@@ -90,7 +132,6 @@ st.markdown("""<style>
         padding: 5px;
     }
     
-    .block-container { position: relative; z-index: 1; padding-top: 2rem; }
     h1, h2, h3 { color: var(--accent-color) !important; font-weight: 800; border-bottom: 2px solid rgba(255, 255, 255, 0.6); padding-bottom: 10px; margin-bottom: 20px;}
     p, label { color: var(--text-primary); font-weight: 500; }
 </style>""", unsafe_allow_html=True)
