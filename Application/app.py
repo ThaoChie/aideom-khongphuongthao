@@ -24,7 +24,7 @@ st.markdown("""<style>
       --accent-hover: #ffb3d1;
     }
     
-    /* Animated Pink Cloudy Background */
+    /* Static Pink Cloudy Background */
     .stApp { 
         background-color: #ff9a9e !important;
         background-image: 
@@ -37,7 +37,7 @@ st.markdown("""<style>
         font-family: 'Outfit', sans-serif !important; 
     }
 
-    /* Twinkling Stars Effect (Static) */
+    /* Static Stars Effect */
     .stApp::before {
         content: "";
         position: fixed;
@@ -54,6 +54,7 @@ st.markdown("""<style>
             radial-gradient(3px 3px at 600px 50px, rgba(255,255,255,0.8), rgba(0,0,0,0));
         background-repeat: repeat;
         background-size: 650px 300px;
+        opacity: 0.8;
         z-index: 0;
         pointer-events: none;
     }
