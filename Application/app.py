@@ -27,7 +27,7 @@ st.markdown("""<style>
     
     .stApp { background-color: var(--bg); color: var(--text-primary); font-family: 'Inter', sans-serif; }
     
-    [data-testid="stSidebar"] { background-color: #FDFBFB !important; border-right: 1px solid #FFC8DD; box-shadow: 2px 0 10px rgba(255,200,221, 0.3); }
+    [data-testid="stSidebar"] { background-color: #FFFFFF !important; border-right: 1px solid #FFC8DD; box-shadow: 2px 0 10px rgba(255,200,221, 0.3); }
     [data-testid="stSidebar"] * { color: var(--text-secondary); font-weight: 500; }
     [data-testid="stSidebar"] h1, [data-testid="stSidebar"] p { color: var(--accent-color) !important; font-weight: 800; }
 
