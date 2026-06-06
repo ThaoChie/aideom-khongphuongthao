@@ -14,41 +14,76 @@ DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__
 st.set_page_config(page_title="AIDEOM-VN Streamlit", layout="wide", initial_sidebar_state="expanded")
 
 st.markdown("""<style>
-    /* Minimalist Theme */
+    /* Soft Pink Glassmorphism Theme */
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+    
     :root {
-      --bg: #FFFFFF;
       --text-primary: #333333;
       --text-secondary: #FF5C8D;
-      --clay-shadow-out: 4px 4px 10px rgba(255,200,221, 0.2), -4px -4px 10px #ffffff;
-      --clay-shadow-in: inset 2px 2px 5px rgba(255,200,221, 0.2), inset -2px -2px 5px #ffffff;
       --accent-color: #FF5C8D;
       --accent-hover: #ffb3d1;
     }
     
-    .stApp { background-color: var(--bg); color: var(--text-primary); font-family: 'Inter', sans-serif; }
+    /* Soft Pink Gradient Background */
+    .stApp { 
+        background: linear-gradient(135deg, #ffe0e9 0%, #ffc2d4 100%) !important; 
+        color: var(--text-primary); 
+        font-family: 'Outfit', sans-serif !important; 
+    }
     
-    [data-testid="stSidebar"] { background-color: #FFFFFF !important; border-right: 1px solid #FFC8DD; box-shadow: 2px 0 10px rgba(255,200,221, 0.3); }
+    /* Sidebar */
+    [data-testid="stSidebar"] { 
+        background-color: rgba(255, 255, 255, 0.3) !important; 
+        backdrop-filter: blur(15px) !important;
+        -webkit-backdrop-filter: blur(15px) !important;
+        border-right: 1px solid rgba(255, 255, 255, 0.5); 
+        box-shadow: 2px 0 10px rgba(255,200,221, 0.2); 
+    }
     [data-testid="stSidebar"] * { color: var(--text-secondary); font-weight: 500; }
     [data-testid="stSidebar"] h1, [data-testid="stSidebar"] p { color: var(--accent-color) !important; font-weight: 800; }
 
-    /* Minimalist Widgets */
+    /* Glassmorphism Buttons */
     .stButton > button {
-        background: #ffffff; border: 1px solid #FFC8DD; border-radius: 8px;
-        box-shadow: 0 2px 5px rgba(255,200,221,0.1);
-        color: var(--accent-color); font-weight: 700; transition: all 0.2s;
+        background: rgba(255, 255, 255, 0.4) !important; 
+        backdrop-filter: blur(10px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.6) !important; 
+        border-radius: 12px !important;
+        box-shadow: 0 4px 10px rgba(255,200,221,0.2) !important;
+        color: var(--accent-color) !important; 
+        font-weight: 700 !important; 
+        transition: all 0.3s ease !important;
     }
-    .stButton > button:hover { background: var(--accent-hover); color: #C13346; border-color: #E98D9E; }
+    .stButton > button:hover { 
+        background: rgba(255, 255, 255, 0.8) !important; 
+        transform: translateY(-2px); 
+    }
     
-    /* Metrics */
+    /* Glassmorphism Metrics */
     [data-testid="stMetric"] {
-        background: #ffffff; border-radius: 12px; padding: 15px; margin: 10px 0;
-        border: 1px solid #FFC8DD;
-        box-shadow: 0 4px 12px rgba(255,200,221,0.08); transition: transform 0.2s;
+        background: rgba(255, 255, 255, 0.35) !important; 
+        backdrop-filter: blur(15px) !important;
+        -webkit-backdrop-filter: blur(15px) !important;
+        border-radius: 16px !important; 
+        padding: 15px !important; 
+        margin: 10px 0 !important;
+        border: 1px solid rgba(255, 255, 255, 0.6) !important;
+        box-shadow: 0 8px 32px rgba(255,182,193,0.15) !important; 
+        transition: transform 0.2s !important;
         text-align: center;
     }
-    [data-testid="stMetric"]:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(255,200,221,0.15); }
-    [data-testid="stMetricValue"] { color: var(--accent-color) !important; font-size: 2.2rem; font-weight: 800; }
-    [data-testid="stMetricLabel"] { color: var(--text-secondary) !important; font-weight: bold; }
+    [data-testid="stMetric"]:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(255,182,193,0.25) !important; }
+    [data-testid="stMetricValue"] { color: var(--accent-color) !important; font-size: 2.2rem !important; font-weight: 800 !important; }
+    [data-testid="stMetricLabel"] { color: var(--text-secondary) !important; font-weight: 700 !important; text-transform: uppercase; font-size: 0.9rem !important; letter-spacing: 1px; }
+
+    /* Glassmorphism Containers (for charts) */
+    div[data-testid="stVerticalBlock"] > div[data-testid="stVerticalBlockBorderWrapper"] > div {
+        background: rgba(255, 255, 255, 0.35) !important;
+        backdrop-filter: blur(15px) !important;
+        -webkit-backdrop-filter: blur(15px) !important;
+        border-radius: 16px !important;
+        border: 1px solid rgba(255, 255, 255, 0.6) !important;
+        box-shadow: 0 8px 32px rgba(255,182,193,0.1) !important;
+    }
 
     /* Input inputs/sliders */
     div[data-baseweb="slider"] {
@@ -56,7 +91,7 @@ st.markdown("""<style>
     }
     
     .block-container { position: relative; z-index: 1; padding-top: 2rem; }
-    h1, h2, h3 { color: var(--accent-color) !important; font-weight: 800; border-bottom: 2px solid #FFC8DD; padding-bottom: 10px; margin-bottom: 20px;}
+    h1, h2, h3 { color: var(--accent-color) !important; font-weight: 800; border-bottom: 2px solid rgba(255, 255, 255, 0.6); padding-bottom: 10px; margin-bottom: 20px;}
     p, label { color: var(--text-primary); font-weight: 500; }
 </style>""", unsafe_allow_html=True)
 
