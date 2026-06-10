@@ -299,6 +299,15 @@ with col_content_global:
                 df_noeq = pd.DataFrame(res['no_equity_alloc']).T
                 fig_noeq = px.imshow(df_noeq, title="Heatmap KHÔNG có ràng buộc công bằng (bỏ C5)", color_continuous_scale=['#FFCDD2', '#FF4081'], aspect="auto", text_auto=",.0f")
                 st.plotly_chart(fig_noeq, use_container_width=True)
+            with st.container(border=True):
+                st.subheader("5. Chi phí kinh tế của công bằng vùng miền (bỏ C3) heatmap")
+                c1, c2, c3 = st.columns(3)
+                c1.metric("Z* có C3", f"{res['Z']:,.1f}")
+                c2.metric("Z* không C3", f"{res['no_c3_z']:,.1f}")
+                c3.metric("Chi phí công bằng (ΔZ)", f"{res['equity_cost_c3']:,.1f} tỷ VND", delta=f"-{res['equity_cost_c3']:,.1f}")
+                df_noc3 = pd.DataFrame(res['no_c3_alloc']).T
+                fig_noc3 = px.imshow(df_noc3, title="Heatmap KHÔNG có ràng buộc ngân sách trần (bỏ C3)", color_continuous_scale=['#FFCDD2', '#FF4081'], aspect="auto", text_auto=",.0f")
+                st.plotly_chart(fig_noc3, use_container_width=True)
 
     elif page == pages[4]:
         st.title("Bài 5: MIP Lựa chọn dự án")
